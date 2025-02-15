@@ -1,0 +1,10 @@
+[package]
+name = "gpu-funcs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cuda_std = { version = "0.2.2" }
+
+[lib]
+crate-type = ["cdylib", "rlib"]

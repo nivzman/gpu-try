@@ -1,0 +1,48 @@
+[package]
+name = "gpu-funcs-builder"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# We don't depend on these directly, but want to pin them to specific versions.
+# This is because we're bound to a specific rustc version but cargo will chose
+# the newest semver compatible versions anyway.
+log = "=0.4.17"
+regex-syntax = "=0.6.28"
+regex = "=1.7.1"
+thread_local = "=1.1.4"
+jobserver = "=0.1.25"
+cc = "=1.0.78"
+rayon = "=1.5.1"
+rayon-core = "=1.10.0"
+byteorder = "=1.4.0"
+
+# Crossbeam crates pinned to versions with MSRV <= 1.59
+crossbeam-channel = "=0.5.0"
+crossbeam-deque   = "=0.8.1"
+crossbeam-epoch   = "=0.9.5"
+crossbeam-utils   = "=0.8.7"
+
+# libc pinned before it bumped MSRV to 1.63
+libc = "=0.2.150"
+
+libm = "=0.2.8"
+
+# socket2 pinned before its MSRV bump to 1.63
+socket2 = "=0.4.9"
+
+# windows-sys pinned before it required 1.60
+windows-sys = "=0.45.0"
+
+filetime = "=0.2.20"
+
+curl = "=0.4.40"
+
+# tracing-subscriber & attributes pinned before they required 1.63
+tracing-subscriber  = "=0.3.16"
+tracing-attributes  = "=0.1.27"
+
+schannel = "=0.1.23"
+
+[build-dependencies]
+cuda_builder = { version = "0.3.0" }

@@ -1,0 +1,16 @@
+[workspace]
+resolver = "2"
+members = [
+    "workspace/gpu-funcs",
+    "workspace/gpu-funcs-buider",
+    "workspace/adder",
+]
+
+[patch.crates-io]
+socket2 = { path = "patched/socket2" }
+
+[profile.release]
+strip = true
+panic = 'abort'
+lto = true
+codegen-units = 1
