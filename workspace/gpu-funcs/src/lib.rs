@@ -13,7 +13,11 @@ use cuda_std::GpuFloat;
 pub unsafe fn add(a: &[f32], b: &[f32], c: *mut f32) {
     let idx = thread::index_1d() as usize;
     if idx < a.len() {
+        let mut sum = 0.0f32;
+        for i in 0..a.len() {
+            sum += a[idx] * b[i];
+        }
         let elem = &mut *c.add(idx);
-        *elem = a[idx].powi(2) + b[idx];
+        *elem = sum;
     }
 }

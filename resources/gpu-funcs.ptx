@@ -20,70 +20,54 @@
 	.param .u64 add_param_4
 )
 {
-	.reg .pred 	%p<8>;
-	.reg .f32 	%f<13>;
-	.reg .b32 	%r<10>;
-	.reg .b64 	%rd<15>;
+	.reg .pred 	%p<4>;
+	.reg .f32 	%f<7>;
+	.reg .b32 	%r<5>;
+	.reg .b64 	%rd<21>;
 
 
-	ld.param.u64 	%rd4, [add_param_0];
-	ld.param.u64 	%rd8, [add_param_1];
-	ld.param.u64 	%rd5, [add_param_2];
-	ld.param.u64 	%rd6, [add_param_3];
-	ld.param.u64 	%rd7, [add_param_4];
-	mov.u32 	%r3, %ntid.x;
-	mov.u32 	%r4, %ctaid.x;
-	mov.u32 	%r5, %tid.x;
-	mad.lo.s32 	%r6, %r3, %r4, %r5;
-	cvt.u64.u32 	%rd1, %r6;
-	setp.ge.u64 	%p1, %rd1, %rd8;
-	@%p1 bra 	$L__BB0_9;
+	ld.param.u64 	%rd9, [add_param_0];
+	ld.param.u64 	%rd10, [add_param_1];
+	ld.param.u64 	%rd11, [add_param_2];
+	ld.param.u64 	%rd12, [add_param_3];
+	ld.param.u64 	%rd13, [add_param_4];
+	mov.u32 	%r1, %ntid.x;
+	mov.u32 	%r2, %ctaid.x;
+	mov.u32 	%r3, %tid.x;
+	mad.lo.s32 	%r4, %r1, %r2, %r3;
+	cvt.u64.u32 	%rd1, %r4;
+	setp.ge.u64 	%p1, %rd1, %rd10;
+	@%p1 bra 	$L__BB0_6;
 
-	setp.lt.u64 	%p2, %rd1, %rd6;
-	@%p2 bra 	$L__BB0_3;
-	bra.uni 	$L__BB0_2;
-
-$L__BB0_3:
-	cvta.to.global.u64 	%rd9, %rd4;
-	shl.b64 	%rd10, %rd1, 2;
-	add.s64 	%rd11, %rd9, %rd10;
-	ld.global.nc.f32 	%f10, [%rd11];
-	cvta.to.global.u64 	%rd2, %rd7;
-	cvta.to.global.u64 	%rd3, %rd5;
-	mov.f32 	%f12, 0f3F800000;
-	mov.u32 	%r9, 2;
-	mov.pred 	%p4, 0;
-	bra.uni 	$L__BB0_4;
-
-$L__BB0_7:
-	mul.rn.f32 	%f10, %f10, %f10;
-
-$L__BB0_4:
-	and.b32  	%r8, %r9, 1;
-	setp.eq.b32 	%p3, %r8, 1;
-	xor.pred  	%p5, %p3, %p4;
-	not.pred 	%p6, %p5;
-	@%p6 bra 	$L__BB0_6;
-
-	mul.rn.f32 	%f12, %f12, %f10;
-
-$L__BB0_6:
-	shr.u32 	%r9, %r9, 1;
-	setp.eq.s32 	%p7, %r9, 0;
-	@%p7 bra 	$L__BB0_8;
-	bra.uni 	$L__BB0_7;
-
-$L__BB0_8:
-	add.s64 	%rd13, %rd2, %rd10;
-	add.s64 	%rd14, %rd3, %rd10;
-	ld.global.nc.f32 	%f8, [%rd14];
-	add.f32 	%f9, %f12, %f8;
-	st.global.f32 	[%rd13], %f9;
-
-$L__BB0_9:
-	ret;
+	cvta.to.global.u64 	%rd15, %rd9;
+	shl.b64 	%rd16, %rd1, 2;
+	add.s64 	%rd2, %rd15, %rd16;
+	cvta.to.global.u64 	%rd19, %rd11;
+	cvta.to.global.u64 	%rd4, %rd13;
+	mov.f32 	%f6, 0f00000000;
+	mov.u64 	%rd20, 0;
 
 $L__BB0_2:
+	setp.lt.u64 	%p2, %rd20, %rd12;
+	@%p2 bra 	$L__BB0_4;
+	bra.uni 	$L__BB0_3;
+
+$L__BB0_4:
+	ld.global.nc.f32 	%f4, [%rd19];
+	ld.global.nc.f32 	%f5, [%rd2];
+	fma.rn.f32 	%f6, %f5, %f4, %f6;
+	add.s64 	%rd19, %rd19, 4;
+	add.s64 	%rd20, %rd20, 1;
+	setp.lt.u64 	%p3, %rd20, %rd10;
+	@%p3 bra 	$L__BB0_2;
+
+	add.s64 	%rd18, %rd4, %rd16;
+	st.global.f32 	[%rd18], %f6;
+
+$L__BB0_6:
+	ret;
+
+$L__BB0_3:
 	trap;
 
 }

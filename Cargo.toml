@@ -9,8 +9,8 @@ members = [
 [patch.crates-io]
 socket2 = { path = "patched/socket2" }
 
-[profile.release]
-strip = true
-panic = 'abort'
-lto = true
-codegen-units = 1
+#[profile.release]
+#strip = true
+#panic = 'abort'
+#lto = true
+#codegen-units = 1
