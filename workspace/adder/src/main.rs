@@ -4,7 +4,7 @@ use nanorand::{Rng, WyRand};
 
 static PTX: &str = include_str!("../../../resources/gpu-funcs.ptx");
 
-const NUMBERS_LEN: usize = 4_000_000;
+const NUMBERS_LEN: usize = 1_000_000;
 
 fn test_gpu() {
     let mut wyrand = WyRand::new();
